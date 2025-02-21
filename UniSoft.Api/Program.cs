@@ -1,11 +1,17 @@
 using UniSoft.Infrastructure.Configurations;
 using UniSoft.Application.Configurations;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Configuration de l'infrastructure (Dapper, SQLite, Repositories)

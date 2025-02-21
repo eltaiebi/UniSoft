@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace UniSoft.Application.DTOs
 {
     // Classe DatabaseTable
@@ -108,13 +110,13 @@ namespace UniSoft.Application.DTOs
     }
     public enum FieldType
     {
-        Text,
-        TextArea,
-        ComboBox,
-        MultipleChoice,
-        CheckBox,
-        DateTime,
-        Number
+        Text = 0,
+        TextArea = 1,
+        ComboBox = 2,
+        MultipleChoice = 3,
+        CheckBox = 4,
+        DateTime = 5,
+        Number = 6
     }
     public enum ComponentType
     {
