@@ -32,7 +32,6 @@ export class DynamicPageComponent implements OnInit {
   }
 
   loadPage(pageId: number): void {
-    debugger
     this.loading = true;
     this.applicationService.getApplicationDetails(1).subscribe({
       next: (app) => {

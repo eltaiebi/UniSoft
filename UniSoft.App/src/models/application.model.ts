@@ -101,3 +101,12 @@ export enum ComponentType {
 export interface DynamicData {
   data: any[]; // Type 'any' car les données sont dynamiques
 }
+
+export interface DynamicLine {
+  rows: DynamicCol[] 
+}
+export interface DynamicCol {
+  columnName : string;
+  value : string;
+  typesql: string
+}
