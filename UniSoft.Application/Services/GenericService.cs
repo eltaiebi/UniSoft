@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
+using UniSoft.Application.Interfaces;
 using UniSoft.Domain.Interfaces;
-using static UniSoft.Application.Interfaces.IService;
 
 namespace UniSoft.Application.Services
 {
-    public class Service<T, TDto> : IService<T, TDto> where T : class where TDto : class
+    public class GenericService<TEntity, TDto> : IGenericService<TEntity, TDto> where TEntity : class where TDto : class
     {
-        private readonly IRepository<T> _repository;
+        private readonly IGenericRepository<TEntity> _repository;
         protected readonly IMapper _mapper;
 
-        public Service(IRepository<T> repository, IMapper mapper)
+        public GenericService(IGenericRepository<TEntity> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -29,13 +29,13 @@ namespace UniSoft.Application.Services
 
         public async Task<int> AddAsync(TDto dto)
         {
-            var entity = _mapper.Map<T>(dto);
+            var entity = _mapper.Map<TEntity>(dto);
             return await _repository.AddAsync(entity);
         }
 
         public async Task<int> UpdateAsync(TDto dto)
         {
-            var entity = _mapper.Map<T>(dto);
+            var entity = _mapper.Map<TEntity>(dto);
             return await _repository.UpdateAsync(entity);
         }
 
@@ -44,7 +44,4 @@ namespace UniSoft.Application.Services
             return await _repository.DeleteAsync(id);
         }
     }
-
-
-
 }

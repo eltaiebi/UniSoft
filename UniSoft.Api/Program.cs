@@ -1,12 +1,17 @@
 using UniSoft.Infrastructure.Configurations;
 using UniSoft.Application.Configurations;
-using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Models;
-using System.Reflection;
-
-
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin() // Autoriser toutes les origines
+                   .AllowAnyMethod() // Autoriser toutes les méthodes (GET, POST, etc.)
+                   .AllowAnyHeader(); // Autoriser tous les en-têtes
+        });
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -29,5 +34,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
+// Utiliser la politique CORS
+app.UseCors("AllowAllOrigins");
 app.MapControllers();
 app.Run();

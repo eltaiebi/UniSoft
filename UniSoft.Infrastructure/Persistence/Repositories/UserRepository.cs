@@ -5,7 +5,7 @@ using UniSoft.Domain.Interfaces;
 
 namespace UniSoft.Infrastructure.Persistence.Repositories
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public class UserRepository : GenericRepository<User>, IUserRepository
     {
         public UserRepository(IDbConnection connection) : base(connection) { }
 

@@ -9,5 +9,4 @@ namespace UniSoft.Application.DTOs
         public string FullName { get; private set; }
         public DateTime CreatedAt { get; private set; }
     }
-
 }

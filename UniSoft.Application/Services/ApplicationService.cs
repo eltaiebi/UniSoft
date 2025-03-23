@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using UniSoft.Application.DTOs;
 using UniSoft.Application.Interfaces;
-using UniSoft.Application.Services;
-using UniSoft.Domain.Entities;
 using UniSoft.Domain.Interfaces;
-using static System.Net.Mime.MediaTypeNames;
-using static UniSoft.Application.Interfaces.IService;
 
 namespace UniSoft.Application.Services
 {
@@ -54,16 +48,22 @@ namespace UniSoft.Application.Services
             var databaseColumns = await _databaseColumnRepository.GetAllAsync();
             var menuElements = await _menuElementRepository.GetAllAsync();
             var pages = await _pageRepository.GetAllAsync();
+            var tables = await _databaseTableRepository.GetAllAsync();
+            var columns = await _databaseColumnRepository.GetAllAsync();
             var components = await _componentRepository.GetAllAsync();
             var pageComponents = await _pageComponentRepository.GetAllAsync();
             var formComponentFields = await _formComponentFieldRepository.GetAllAsync();
 
+
+            foreach (var table in tables)
+                table.Columns = columns.Where(x => x.TableId == table.Id).ToList();
+            
             foreach (var application in applications)
             {
                 application.MenuElements = menuElements.ToList();
                 foreach (var menuElement in application.MenuElements)
                 {
-                    menuElement.Page = pages.First(x=>x.Id == x.Id);
+                    menuElement.Page = pages.First(x=>x.Id == menuElement.PageId);
                     foreach (var componentPage in pageComponents)
                     {
                         if (componentPage.PageId != menuElement.PageId)
@@ -71,8 +71,8 @@ namespace UniSoft.Application.Services
 
                         var component = components.First(x => x.Id == componentPage.ComponentId);
                         if(component.Type == Domain.Entities.ComponentType.Form) 
-                            component.Fields = formComponentFields.Where(x=>x.Id == component.Id).ToList();
-
+                            component.Fields = formComponentFields.Where(x=>x.ComponentId == component.Id).ToList();
+                        component.Table = tables.First(x => x.Id == component.TableId);
                         menuElement.Page.Components.Add(component);
                     }
                 }
@@ -82,9 +82,6 @@ namespace UniSoft.Application.Services
         }
 
     }
-
-
-
 
 }
 

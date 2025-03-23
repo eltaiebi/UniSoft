@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UniSoft.Application\3.UniSoft.Application.csproj" />
-    <ProjectReference Include="..\UniSoft.Infrastructure\5.UniSoft.Infrastructure.csproj" />
+    <ProjectReference Include="..\UniSoft.Application\UniSoft.Application.csproj" />
+    <ProjectReference Include="..\UniSoft.Infrastructure\UniSoft.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

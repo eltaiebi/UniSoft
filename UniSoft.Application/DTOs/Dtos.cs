@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 namespace UniSoft.Application.DTOs
 {
     // Classe DatabaseTable

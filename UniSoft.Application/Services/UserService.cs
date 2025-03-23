@@ -6,7 +6,7 @@ using UniSoft.Domain.Interfaces;
 
 namespace UniSoft.Application.Services
 {
-    public class UserService : Service<User, UserDto>, IUserService
+    public class UserService : GenericService<User, UserDto>, IUserService
     {
         private readonly IUserRepository _userRepository;
 

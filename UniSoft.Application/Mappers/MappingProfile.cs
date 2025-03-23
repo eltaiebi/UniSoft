@@ -9,24 +9,14 @@ namespace UniSoft.Application.Mappers
     {
         public AutoMapperProfile()
         {
-            // DatabaseTable
             CreateMap<DatabaseTable, DatabaseTableDto>().ReverseMap();
             CreateMap<DatabaseColumn, DatabaseColumnDto>().ReverseMap();
-
-            // Application
             CreateMap<Domain.Entities.Application, ApplicationDto>().ReverseMap();
             CreateMap<MenuElement, MenuElementDto>().ReverseMap();
-
-            // Page
             CreateMap<Page, PageDto>().ReverseMap();
-
-            // Component
             CreateMap<Component, ComponentDto>().ReverseMap();
-
-            // FormComponentField
-            CreateMap<FormComponentField, FormComponentFieldDto>()
-                .ReverseMap();
-
+            CreateMap<FormComponentField, FormComponentFieldDto>().ReverseMap();
+            CreateMap<DynamicData, DynamicDataDto>().ReverseMap();
         }
     }
 }

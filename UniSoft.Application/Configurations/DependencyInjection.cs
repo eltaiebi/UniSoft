@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using static UniSoft.Application.Interfaces.IService;
+using UniSoft.Application.Interfaces;
 using UniSoft.Application.Services;
 
 namespace UniSoft.Application.Configurations
@@ -10,8 +10,8 @@ namespace UniSoft.Application.Configurations
         public static void ConfigureApplication(this IServiceCollection services)
         {
             // Injection Générique des Services
-            services.AddScoped(typeof(IService<,>), typeof(Service<,>));
-
+            services.AddScoped(typeof(IGenericService<,>), typeof(GenericService<,>));
+            
             // Injection automatique des `Services` spécifiques
             var serviceAssembly = Assembly.GetExecutingAssembly();
             var serviceTypes = serviceAssembly.GetTypes()
@@ -20,7 +20,11 @@ namespace UniSoft.Application.Configurations
 
             foreach (var serviceType in serviceTypes)
             {
-                var interfaceType = serviceType.GetInterfaces().FirstOrDefault(i => i.Name.EndsWith("Service"));
+                var interfaceType = serviceType.GetInterfaces().FirstOrDefault(i => 
+                i.Name.EndsWith("Service") && 
+                !i.Name.EndsWith("BaseService") && 
+                !i.Name.EndsWith("GenericService"));
+
                 if (interfaceType != null)
                 {
                     services.AddScoped(interfaceType, serviceType);

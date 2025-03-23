@@ -2,52 +2,59 @@
 using System.Data;
 using UniSoft.Domain.Entities;
 using UniSoft.Domain.Interfaces;
+using static Dapper.SqlMapper;
 
 namespace UniSoft.Infrastructure.Persistence.Repositories
 {
     //Repository pour Application
-    public class ApplicationRepository : Repository<Application>, IApplicationRepository
+    public class ApplicationRepository : GenericRepository<Application>, IApplicationRepository
     {
         public ApplicationRepository(IDbConnection connection) : base(connection) { }
     }
 
     // Repository pour DatabaseTable
-    public class DatabaseTableRepository : Repository<DatabaseTable>, IDatabaseTableRepository
+    public class DatabaseTableRepository : GenericRepository<DatabaseTable>, IDatabaseTableRepository
     {
         public DatabaseTableRepository(IDbConnection connection) : base(connection) { }
     }
 
     // Repository pour DatabaseColumn
-    public class DatabaseColumnRepository : Repository<DatabaseColumn>, IDatabaseColumnRepository
+    public class DatabaseColumnRepository : GenericRepository<DatabaseColumn>, IDatabaseColumnRepository
     {
         public DatabaseColumnRepository(IDbConnection connection) : base(connection) { }
+
+        public async Task<IEnumerable<DatabaseColumn>> GetByTableIdAsync(int tableId)
+        {
+            var sql = $"SELECT * FROM {_tableName} WHERE TableId = @TableId";
+            return await _connection.QueryAsync<DatabaseColumn>(sql, new { TableId = tableId });
+        }
     }
 
     // Repository pour MenuElement
-    public class MenuElementRepository : Repository<MenuElement>, IMenuElementRepository
+    public class MenuElementRepository : GenericRepository<MenuElement>, IMenuElementRepository
     {
         public MenuElementRepository(IDbConnection connection) : base(connection) { }
     }
 
     // Repository pour Page
-    public class PageRepository : Repository<Page>, IPageRepository
+    public class PageRepository : GenericRepository<Page>, IPageRepository
     {
         public PageRepository(IDbConnection connection) : base(connection) { }
     }
 
     // Repository pour Component
-    public class ComponentRepository : Repository<Component>, IComponentRepository
+    public class ComponentRepository : GenericRepository<Component>, IComponentRepository
     {
         public ComponentRepository(IDbConnection connection) : base(connection) { }
     }
     // Repository pour Component
-    public class PageComponentRepository : Repository<PageComponent>, IPageComponentRepository
+    public class PageComponentRepository : GenericRepository<PageComponent>, IPageComponentRepository
     {
         public PageComponentRepository(IDbConnection connection) : base(connection) { }
     }
 
     // Repository pour FormComponentField
-    public class FormComponentFieldRepository : Repository<FormComponentField>, IFormComponentFieldRepository
+    public class FormComponentFieldRepository : GenericRepository<FormComponentField>, IFormComponentFieldRepository
     {
         public FormComponentFieldRepository(IDbConnection connection) : base(connection) { }
     }

@@ -6,5 +6,5 @@ namespace UniSoft.Application.Interfaces
     {
         Task<ApplicationDto> GetApplicationDetailsAsync(int applicationId);
     }
-
+    
 }

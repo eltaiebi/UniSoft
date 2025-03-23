@@ -15,7 +15,7 @@ namespace UniSoft.Infrastructure.Configurations
             services.ConfigureDapper(configuration);
 
             // Injection Générique des Repositories
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             // Injection automatique des `Repositories` spécifiques
             var repositoryAssembly = Assembly.GetExecutingAssembly();
@@ -25,7 +25,8 @@ namespace UniSoft.Infrastructure.Configurations
 
             foreach (var repositoryType in repositoryTypes)
             {
-                var interfaceType = repositoryType.GetInterfaces().FirstOrDefault(i => i.Name.EndsWith("Repository"));
+                //TODO: il faut optimiser cette partie
+                var interfaceType = repositoryType.GetInterfaces().FirstOrDefault(i => i.Name.EndsWith("Repository") && !i.Name.EndsWith("BaseRepository")&& !i.Name.EndsWith("GenericRepository"));
                 if (interfaceType != null)
                 {
                     services.AddScoped(interfaceType, repositoryType);

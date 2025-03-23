@@ -26,5 +26,6 @@ namespace UniSoft.Presentation.Controllers
             }
             return Ok(applicationDetails);
         }
+
     }
 }

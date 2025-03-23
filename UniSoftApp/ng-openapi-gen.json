@@ -1,5 +1,12 @@
 {
   "input": "http://localhost:5021/swagger/v1/swagger.json",
-  "output": "./src/app/services",
-  "useHttpClient": true
+  "$schema": "node_modules/ng-openapi-gen/ng-openapi-gen-schema.json",
+  "output": "./src/app/api",
+  "ignoreUnusedModels": false,
+  "removeStaleFiles": true,
+  "defaultTag": "Api",
+  "serviceSuffix": "Service",
+  "modelSuffix": "",
+  "enumSuffix": "",
+  "generateStore": false
 }
