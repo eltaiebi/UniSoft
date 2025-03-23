@@ -1,0 +1,39 @@
+<div class="app-container" *ngIf="!loading && !error">
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>{{ application?.label }}</span>
+      <span class="spacer"></span>
+      <span class="version">v{{ application?.version }}</span>
+    </mat-toolbar>
+  
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav #sidenav mode="side" opened class="sidenav">
+        <mat-nav-list>
+          <ng-container *ngFor="let menuItem of menuElements">
+            <a mat-list-item (click)="navigateToPage(menuItem.pageId)" [class.active]="router.url === '/page/' + menuItem.pageId">
+              <mat-icon *ngIf="menuItem.icon">{{ menuItem.icon }}</mat-icon>
+              <span class="menu-label">{{ menuItem.label }}</span>
+            </a>
+          </ng-container>
+        </mat-nav-list>
+      </mat-sidenav>
+  
+      <mat-sidenav-content>
+        <div class="content-container">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+  
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Chargement de l'application...</p>
+  </div>
+  
+  <div *ngIf="error" class="error-container">
+    <mat-icon color="warn">error</mat-icon>
+    <p>Erreur lors du chargement de l'application. Veuillez réessayer plus tard.</p>
+  </div>

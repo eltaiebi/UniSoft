@@ -1,0 +1,41 @@
+<div class="components-container">
+    <ng-container *ngFor="let component of components">
+      <mat-card class="component-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar *ngIf="component.icon">{{ component.icon }}</mat-icon>
+          <mat-card-title>{{ component.label }}</mat-card-title>
+          <mat-card-subtitle *ngIf="component.description">{{ component.description }}</mat-card-subtitle>
+        </mat-card-header>
+        
+        <mat-card-content>
+          <!-- Display different component types -->
+          <ng-container [ngSwitch]="component.type">
+            <app-dynamic-list 
+              *ngSwitchCase="ComponentType.List" 
+              [component]="component">
+            </app-dynamic-list>
+            
+            <app-dynamic-form 
+              *ngSwitchCase="ComponentType.Form" 
+              [component]="component">
+            </app-dynamic-form>
+            
+            <div *ngSwitchDefault>
+              <p>Type de composant non pris en charge</p>
+            </div>
+          </ng-container>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+  
+</div>
+
+<div *ngIf="loading" class="loading-container">
+  <mat-spinner></mat-spinner>
+  <p>Chargement de la page...</p>
+</div>
+
+<div *ngIf="error" class="error-container">
+  <mat-icon color="warn">error</mat-icon>
+  <p>Erreur lors du chargement de la page. Veuillez réessayer plus tard.</p>
+</div>
